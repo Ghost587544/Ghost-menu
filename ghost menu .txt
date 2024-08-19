@@ -1,0 +1,64 @@
+local Players = game.Players
+local LocalPlayer = Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+
+-- Cria a interface do usuário
+local frame = Instance.new("Frame")
+frame.Parent = game.StarterGui:GetCoreGuiObjects().ScreenGui
+frame.Size = UDim2.new(0.2, 0, 0.2, 0)
+frame.Position = UDim2.new(0.4, 0, 0.4, 0)
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+
+local titulo = Instance.new("TextLabel")
+titulo.Parent = frame
+titulo.Text = "Copiar Skin"
+titulo.Size = UDim2.new(1, 0, 0.1, 0)
+titulo.Position = UDim2.new(0, 0, 0, 0)
+titulo.FontSize = Enum.FontSize.Size18
+titulo.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+local inputNome = Instance.new("TextBox")
+inputNome.Parent = frame
+inputNome.Size = UDim2.new(1, 0, 0.1, 0)
+inputNome.Position = UDim2.new(0, 0, 0.1, 0)
+inputNome.PlaceholderText = "Nome do jogador"
+inputNome.FontSize = Enum.FontSize.Size14
+inputNome.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+local botaoCopiar = Instance.new("TextButton")
+botaoCopiar.Parent = frame
+botaoCopiar.Size = UDim2.new(1, 0, 0.1, 0)
+botaoCopiar.Position = UDim2.new(0, 0, 0.2, 0)
+botaoCopiar.Text = "Copiar"
+botaoCopiar.FontSize = Enum.FontSize.Size14
+botaoCopiar.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+-- Função para copiar a skin de um jogador
+function copiarSkin(jogador)
+  local skin = jogador.Character:GetDescendant("Humanoid")
+  local skinCopiada = LocalPlayer.Character:GetDescendant("Humanoid")
+
+  -- Copia as propriedades da skin
+  skinCopiada:SetAppearance(skin:GetAppearance())
+  skinCopiada:SetBodyColors(skin:GetBodyColors())
+  skinCopiada:SetHeadColor(skin:GetHeadColor())
+  skinCopiada:SetTorsoColor(skin:GetTorsoColor())
+  skinCopiada:SetLeftArmColor(skin:GetLeftArmColor())
+  skinCopiada:SetRightArmColor(skin:GetRightArmColor())
+  skinCopiada:SetLeftLegColor(skin:GetLeftLegColor())
+  skinCopiada:SetRightLegColor(skin:GetRightLegColor())
+end
+
+-- Evento para quando o botão é clicado
+botaoCopiar.MouseButton1Click:Connect(function()
+  local nomeJogador = inputNome.Text
+  local jogador = Players:FindFirstChild(nomeJogador)
+
+  if jogador then
+    copiarSkin(jogador)
+    print("Skin copiada com sucesso!")
+  else
+    print("Jogador não encontrado.")
+  end
+end)
